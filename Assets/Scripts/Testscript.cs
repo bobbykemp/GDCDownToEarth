@@ -6,7 +6,7 @@ public class Testscript : MonoBehaviour {
 
 	// Use this for initialization
 	public bool testVal;
-	public bool IdontGitIT;
+	public int foo = 555;
 	void Start () {
 		
 	}
