@@ -45,7 +45,7 @@ public class Character : MonoBehaviour
 
     private bool inAir = false; // For ground check
 
-    private float curr_speed_h; // Current horizontal speed
+    private float curr_speed_h = 2.5f; // Current horizontal speed
 
     private DefaultCharSound curraudio = DefaultCharSound.NONE; // To check if we need to play any sound
 
