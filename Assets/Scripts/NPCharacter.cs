@@ -18,6 +18,7 @@ public class NPCharacter : Character
     /* Public Variables */
     public float maxFollowDistance = 1; // How close will our NPC follow player?
 	public float minFollowDistance = 1;
+	public float movementScalingFactor = 4.5f; //character movement was too slow
 	public GameObject target;
 
     /* Getter and Setter */
@@ -42,8 +43,7 @@ public class NPCharacter : Character
 
     public virtual void Update()
     {
-		Follow(target.transform);
-        //Move(); // MOOOOOOOVE
+		Follow (target.transform);
 
     }
 
@@ -51,20 +51,17 @@ public class NPCharacter : Character
     public virtual void Follow(Transform target) // Its virtual. If Enemy class have more complex function, override it.
     {
         Vector2 dist = transform.position - target.position; // How far am I?
+		int dir = 1;
 
-		Debug.Log (dist);
+		if (dist.magnitude > MinFollowDist) { // Am I too far from target?
+			dir = dist.x > 0 ? -1 : 1; // Set direction based on which side of target I'm on (now facing toward target)
+			Debug.Log ("too far from target");
+			Vector2 vel = new Vector2 (H_CurrSpeed, body.velocity.y); // Update velocity profile
+			body.velocity = vel * dir * movementScalingFactor; // Set velocit	y to our character
+		} else {
+			body.velocity = new Vector2(0, body.velocity.y);
+		}
 
-        if (dist.magnitude > MaxFollowDist) // Am I too far from target?
-        {
-            int dir = dist.magnitude > 0 ? 1 : -1; // Set direction
-            H_CurrSpeed = dir * H_Speed; // Add speed towards target!
-        }
-
-		/*if (dist.magnitude < MinFollowDist) 
-		{
-            int dir = dist.magnitude > 0 ? 1 : -1; // Set direction
-            H_CurrSpeed = dir * H_Speed; // Add speed towards target!
-		}*/
     }
 
     public override void Attack(Character target)
