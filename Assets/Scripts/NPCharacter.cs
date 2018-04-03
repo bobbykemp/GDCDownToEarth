@@ -54,6 +54,8 @@ public class NPCharacter : Character
 		bool targetIsMoving = target.GetComponent<PlayerMovement> ().getMoving ();
         int dir = 1;
 
+		Debug.Log (transform.eulerAngles.x);
+
 		if (dist.magnitude > MinFollowDist && targetIsMoving) // Am I too far from target?
         { 
 			dir = dist.x > 0 ? -1 : 1; // Set direction based on which side of target I'm on (now facing toward target)
@@ -73,6 +75,11 @@ public class NPCharacter : Character
 		}
 
     }
+
+	public void Meander(){		//idly wander around waiting for something to happen
+		//TODO add obstacle navigation logic (pathfinding?)
+			
+	}
 
     public override void Attack(Character target)
     {
