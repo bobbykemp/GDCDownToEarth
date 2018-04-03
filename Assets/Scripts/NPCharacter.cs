@@ -50,29 +50,27 @@ public class NPCharacter : Character
     public virtual void Follow(GameObject target) // Its virtual. If Enemy class have more complex function, override it.
     {
         Vector2 dist = transform.position - target.transform.position; // How far am I?
-        Vector2 targetSpeed = target.GetComponent<Rigidbody2D>().velocity;
+		Vector2 targetSpeed = target.GetComponent<Rigidbody2D>().velocity;
+		bool targetIsMoving = target.GetComponent<PlayerMovement> ().getMoving ();
         int dir = 1;
 
-        //Debug.Log("Distance from target = " + dist);
-        Debug.Log("Velocity =" + targetSpeed);
-
-		if (dist.magnitude > MinFollowDist) // Am I too far from target?
+		if (dist.magnitude > MinFollowDist && targetIsMoving) // Am I too far from target?
         { 
 			dir = dist.x > 0 ? -1 : 1; // Set direction based on which side of target I'm on (now facing toward target)
 			//Debug.Log ("too far from target");
 			Vector2 vel = new Vector2 (H_CurrSpeed, body.velocity.y); // Update velocity profile
 			body.velocity = vel * dir * movementScalingFactor; // Set velocity to our character
 		}
-        else if(dist.magnitude <= MinFollowDist - 1)
+		else if(dist.magnitude <= MinFollowDist && targetIsMoving)
         {
             dir = dist.x > 0 ? 1 : -1; // Set direction based on which side of target I'm on (now facing toward target)
             //Debug.Log("too close to target");
             Vector2 vel = new Vector2(H_CurrSpeed, body.velocity.y); // Update velocity profile
             body.velocity = vel * dir * movementScalingFactor; // Set velocity to our character
         }
-       // else {
-		//	body.velocity = new Vector2(0, body.velocity.y);
-	//	}
+       	else {
+			body.velocity = new Vector2(0, body.velocity.y);
+		}
 
     }
 

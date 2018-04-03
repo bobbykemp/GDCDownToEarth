@@ -207,6 +207,7 @@ public class Character : MonoBehaviour
     public virtual void Move()
     {
         Vector2 vel = new Vector2(H_CurrSpeed, body.velocity.y); // Update velocity profile
+		Debug.Log("Current Speed is " + H_CurrSpeed);
         body.velocity = vel; // Set velocity to our character
     }
 }

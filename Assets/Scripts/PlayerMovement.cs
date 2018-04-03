@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     float runSpeed = 0.125f;                  // Increase to Movement Speed while Running
     float staminaRechargeDelay;               // The time between recharges for Stamina
     float jumpForce = 1000f;
+	bool isMoving;
 
 
     // Assign current health and stamina to max value.
@@ -35,8 +36,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+	public bool getMoving(){
+		return isMoving;
+	}
+
     void Update ()
     {
+		isMoving = false;
         // Recharge stamina by one point after the delay time.
         if ((currentStamina < maxStamina) && (Time.time > (lastRechargeTime + staminaRechargeDelay)))
         {
@@ -97,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
     // Move the current movement speed in a direction
     void Move(Vector2 dir)
     {
+		isMoving = true;
         transform.Translate(dir * movementSpeed);
         if (isSprinting)
         {
