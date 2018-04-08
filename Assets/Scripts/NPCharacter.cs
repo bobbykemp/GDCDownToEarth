@@ -41,9 +41,19 @@ public class NPCharacter : Character
         Chartype = CharType.NPC; // Need to make sure our NPC is N.P.C!
     }
 
+	public void Start()
+	{
+		
+	}
+
+	public void Update(){
+		StartCoroutine (Meander(1));
+		StartCoroutine (Meander(-1));
+	}
+
     public virtual void FixedUpdate()
     {
-		Follow (target);
+		//Follow (target);
     }
     
     /* Functions */
@@ -53,8 +63,6 @@ public class NPCharacter : Character
 		Vector2 targetSpeed = target.GetComponent<Rigidbody2D>().velocity;
 		bool targetIsMoving = target.GetComponent<PlayerMovement> ().getMoving ();
         int dir = 1;
-
-		Debug.Log (transform.eulerAngles.x);
 
 		if (dist.magnitude > MinFollowDist && targetIsMoving) // Am I too far from target?
         { 
@@ -76,9 +84,19 @@ public class NPCharacter : Character
 
     }
 
-	public void Meander(){		//idly wander around waiting for something to happen
+	IEnumerator Meander(int curr_dir){		//idly wander around waiting for something to happen
 		//TODO add obstacle navigation logic (pathfinding?)
-			
+		Debug.Log(curr_dir);
+		float time = 0;
+		float wander_time = Random.Range(5,8);
+
+		while (time < wander_time) {
+			time += Time.deltaTime;
+			Move (curr_dir);
+		}
+		//Move (0);
+		yield return null;
+
 	}
 
     public override void Attack(Character target)
@@ -91,4 +109,23 @@ public class NPCharacter : Character
     {
         base.Jump();
     }
+
+	public int RandomizeDir(){
+
+		int cur_dir;
+		
+		if(Random.value >= 0.5){
+			cur_dir = 1;
+		}
+		else{
+			cur_dir = -1;
+		}
+
+		return cur_dir;
+	}
+
+	public float GetRanTime(){
+		float wander_time = Random.Range(5,8);
+		return wander_time;
+	}
 }
