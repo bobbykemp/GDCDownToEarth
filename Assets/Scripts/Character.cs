@@ -204,9 +204,10 @@ public class Character : MonoBehaviour
         body.AddForce(new Vector2(0, V_Speed)); // Jump!
     }
 
-    public virtual void Move()
+	public virtual void Move(int dir)
     {
-        Vector2 vel = new Vector2(H_CurrSpeed, body.velocity.y); // Update velocity profile
+		Vector2 vel = new Vector2(H_CurrSpeed * dir, body.velocity.y); // Update velocity profile
+		Debug.Log("Current Speed is " + H_CurrSpeed);
         body.velocity = vel; // Set velocity to our character
     }
 }
