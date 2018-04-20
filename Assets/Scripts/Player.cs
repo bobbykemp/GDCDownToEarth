@@ -43,8 +43,8 @@ public class Player : Character
     public void Update()
     {
         // If player is taking cover, leave cover first
-        Move(); // Move check
-        DoubleJump(); // Jump check
+        //Move(); // Move check
+        //DoubleJump(); // Jump check
         // If cover is near, take cover
         // If slot number is changed, change item
     }
@@ -90,12 +90,6 @@ public class Player : Character
             if (item.Quantity < 1) // Have we used all item?
                 items[Holding] = null; // Whatever item in that index turn into null
         }
-    }
-
-    public override void Move()
-    {
-        // Check keyboard input
-        base.Move();
     }
 
 }
